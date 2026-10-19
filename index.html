@@ -14,6 +14,7 @@
     --accent: #1a73e8;
     --accent-dark: #1557b0;
     --ok: #188038;
+    --ng: #c5221f;
   }
   * { box-sizing: border-box; }
   body {
@@ -22,6 +23,7 @@
     background: var(--bg);
     color: var(--text);
     font-size: 14px;
+    line-height: 1.5;
   }
   header {
     background: var(--panel);
@@ -29,132 +31,140 @@
     padding: 14px 24px;
   }
   header h1 { margin: 0; font-size: 18px; }
-  header p { margin: 4px 0 0; color: var(--sub); font-size: 13px; }
-  main {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 20px 24px 60px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-  @media (max-width: 860px) { main { grid-template-columns: 1fr; } }
-  .panel {
+  main { max-width: 760px; margin: 0 auto; padding: 20px 16px 80px; }
+
+  .step {
     background: var(--panel);
     border: 1px solid var(--line);
     border-radius: 8px;
-    padding: 16px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
   }
-  .panel h2 {
+  .step h2 {
     margin: 0 0 10px;
-    font-size: 15px;
+    font-size: 16px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   }
-  .step {
+  .num {
     display: inline-flex;
-    width: 22px; height: 22px;
+    width: 26px; height: 26px;
     border-radius: 50%;
     background: var(--accent);
     color: #fff;
-    font-size: 12px;
+    font-size: 13px;
     align-items: center;
     justify-content: center;
+    flex: none;
   }
-  .hint { color: var(--sub); font-size: 12.5px; margin: 0 0 10px; line-height: 1.6; }
+  .step.done .num { background: var(--ok); }
+  .hint { color: var(--sub); font-size: 13px; margin: 0 0 10px; }
+  .hint b { color: var(--text); }
+
   textarea {
     width: 100%;
-    height: 220px;
     border: 1px solid var(--line);
     border-radius: 6px;
     padding: 8px;
-    font-family: Consolas, monospace;
-    font-size: 12px;
+    font-size: 13px;
     resize: vertical;
+    font-family: inherit;
   }
   textarea:focus { outline: 2px solid var(--accent); border-color: transparent; }
-  .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; margin-top: 10px; }
+  #src { height: 140px; font-family: Consolas, monospace; font-size: 12px; }
+
+  .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
+  .row + .row { margin-top: 10px; }
   label { display: block; font-size: 12px; color: var(--sub); margin-bottom: 3px; }
   select, input[type=text] {
     border: 1px solid var(--line);
     border-radius: 6px;
-    padding: 6px 8px;
+    padding: 7px 8px;
     font-size: 14px;
     background: #fff;
-    min-width: 140px;
+    min-width: 150px;
   }
   button {
     border: none;
     border-radius: 6px;
-    padding: 8px 16px;
+    padding: 9px 18px;
     font-size: 14px;
     cursor: pointer;
     background: var(--accent);
     color: #fff;
+    white-space: nowrap;
   }
   button:hover { background: var(--accent-dark); }
   button.secondary { background: #e8eaed; color: var(--text); }
   button.secondary:hover { background: #d8dadd; }
-  button:disabled { background: #c5c9cf; cursor: default; }
+  button.link { background: none; color: var(--accent); padding: 4px 0; font-size: 13px; }
+  button.link:hover { background: none; text-decoration: underline; }
+  button:disabled { background: #c5c9cf; color: #fff; cursor: default; }
+
   .status { font-size: 13px; margin-top: 8px; min-height: 18px; }
   .status.ok { color: var(--ok); }
-  .status.ng { color: #c5221f; }
-  .summary {
-    display: flex;
-    gap: 20px;
-    margin: 8px 0 10px;
-    font-size: 13px;
-  }
-  .summary b { font-size: 18px; }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-  }
-  th, td {
-    border: 1px solid var(--line);
-    padding: 5px 8px;
-    text-align: center;
-    white-space: nowrap;
-  }
+  .status.ng { color: var(--ng); }
+  .loaded { display: flex; align-items: center; gap: 14px; font-size: 14px; }
+  .loaded .ok { color: var(--ok); font-weight: 600; }
+
+  .summary { display: flex; gap: 24px; margin: 12px 0 8px; font-size: 13px; color: var(--sub); }
+  .summary b { font-size: 18px; color: var(--text); margin-left: 4px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { border: 1px solid var(--line); padding: 5px 8px; text-align: center; white-space: nowrap; }
   th { background: #f1f3f4; font-weight: 600; }
-  .tablewrap { max-height: 520px; overflow: auto; border-radius: 6px; }
-  .empty { color: var(--sub); text-align: center; padding: 30px 0; }
-  .copybar { display: flex; gap: 10px; align-items: center; margin-top: 12px; }
-  .small { font-size: 12px; color: var(--sub); }
-  input[type=file] { font-size: 12px; }
-  .shotbox { margin-top: 12px; border-top: 1px dashed var(--line); padding-top: 12px; }
+  .tablewrap { max-height: 320px; overflow: auto; border-radius: 6px; }
+  .empty { color: var(--sub); text-align: center; padding: 24px 0; }
+
+  .msgbox {
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 10px 12px;
+    background: #fafbfc;
+    white-space: pre-wrap;
+    font-size: 14px;
+    margin: 8px 0;
+  }
+  .btns { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 10px; }
+  .btns .small { font-size: 13px; color: var(--sub); }
+  .shotbox { margin-top: 12px; }
   .shotbox img { max-width: 100%; border: 1px solid var(--line); border-radius: 6px; display: block; margin-bottom: 6px; }
-  .shotbox a { color: var(--accent); margin-left: 8px; }
+  .shotbox .small, .small { font-size: 12.5px; color: var(--sub); }
+  .shotbox a { color: var(--accent); margin-left: 6px; }
+  #tplWrap { margin-top: 8px; }
+  #tpl { height: 90px; }
+  input[type=file] { font-size: 12px; }
 </style>
 </head>
 <body>
 <header>
   <h1>稼働内訳コピー</h1>
-  <p>勤怠管理スプシ（Web事務タブなど）を貼り付け → 名前と月を選ぶ → スクショで本人に確認 → コピー → 稼働内訳スプシのA2にCtrl+V</p>
 </header>
 
 <main>
-  <section class="panel">
-    <h2><span class="step">1</span>勤怠データを貼り付け</h2>
-    <p class="hint">
-      勤怠管理スプシの対象タブで <b>A1をクリック → Ctrl+A → Ctrl+C</b> してから、下の枠に <b>Ctrl+V</b>。<br>
-      見出し行（名前・日付・出勤時間・退勤時間・稼働時間）が入っていれば、列の並び順は問いません。kintoneのCSVファイルもそのまま使えます。
-    </p>
-    <textarea id="src" placeholder="ここに貼り付け（Ctrl+V）"></textarea>
-    <div class="row">
-      <div>
-        <label>またはCSVファイルを選ぶ</label>
-        <input type="file" id="file" accept=".csv,.tsv,.txt">
+  <!-- STEP 1 -->
+  <section class="step" id="step1">
+    <h2><span class="num">1</span>勤怠管理スプシの中身を貼り付ける</h2>
+    <div id="srcWrap">
+      <p class="hint">勤怠管理スプシの対象タブ（Web事務など）で <b>A1をクリック → Ctrl+A → Ctrl+C</b>。その後、下の枠に <b>Ctrl+V</b>。</p>
+      <textarea id="src" placeholder="ここに貼り付け（Ctrl+V）"></textarea>
+      <div class="row" style="margin-top:8px">
+        <div>
+          <label>またはkintoneのCSVファイルを選ぶ</label>
+          <input type="file" id="file" accept=".csv,.tsv,.txt">
+        </div>
       </div>
-      <button class="secondary" id="clear">クリア</button>
+      <div class="status" id="parseStatus"></div>
     </div>
-    <div class="status" id="parseStatus"></div>
+    <div id="loadedWrap" class="loaded" hidden>
+      <span class="ok" id="loadedMsg"></span>
+      <button class="link" id="reload">貼り直す</button>
+    </div>
   </section>
 
-  <section class="panel">
-    <h2><span class="step">2</span>名前と月を選んでコピー</h2>
+  <!-- STEP 2 -->
+  <section class="step" id="step2">
+    <h2><span class="num">2</span>誰の・何月分かを選ぶ</h2>
     <div class="row">
       <div>
         <label>名前</label>
@@ -165,35 +175,53 @@
         <select id="month"></select>
       </div>
       <div>
-        <label>概要（全行に入れる文言）</label>
+        <label>概要（全行に入る文言）</label>
         <input type="text" id="gaiyo" value="事務所稼働">
       </div>
     </div>
-
     <div class="summary">
-      <div>日数 <b id="days">0</b></div>
-      <div>稼働時間合計 <b id="total">0</b></div>
+      <div>日数<b id="days">0</b></div>
+      <div>稼働時間合計<b id="total">0</b></div>
     </div>
-
     <div class="tablewrap">
       <table id="out">
         <thead>
           <tr><th>日付</th><th>概要</th><th>出勤時間</th><th>退勤時間</th><th>稼働時間</th></tr>
         </thead>
-        <tbody><tr><td colspan="5" class="empty">貼り付けると、ここに出ます</td></tr></tbody>
+        <tbody><tr><td colspan="5" class="empty">1で貼り付けると、ここに出ます</td></tr></tbody>
       </table>
     </div>
+  </section>
 
-    <div class="copybar">
-      <button id="shot" class="secondary" disabled>スクショ</button>
-      <button id="copy" disabled>この表をコピー</button>
-      <span class="small">スクショ → 本人に確認 → OKならコピーして稼働内訳スプシの <b>A2で Ctrl+V</b></span>
+  <!-- STEP 3 -->
+  <section class="step" id="step3">
+    <h2><span class="num">3</span>本人に確認する（LINE・Chatwork）</h2>
+    <p class="hint">画像と文面を順番にコピーして、相手のトークに <b>Ctrl+V</b> で貼ります。</p>
+    <div class="btns">
+      <button id="shot" disabled>① 画像をコピー</button>
+      <button id="copyMsg" disabled>② 文面をコピー</button>
+    </div>
+    <div class="status" id="shotStatus"></div>
+    <div class="shotbox" id="shotBox" hidden>
+      <img id="shotImg" alt="稼働内訳の画像">
+      <div class="small">うまく貼れないときは <a id="shotDl" href="#" download>画像を保存する</a></div>
+    </div>
+    <div class="msgbox" id="msgPreview"></div>
+    <button class="link" id="tplToggle">文面を変える</button>
+    <div id="tplWrap" hidden>
+      <textarea id="tpl"></textarea>
+      <div class="small">{月}＝対象月、{名前}＝名前、{日数}・{合計} に置き換わります。変更内容は次回も残ります。<button class="link" id="tplReset">初期の文面に戻す</button></div>
+    </div>
+  </section>
+
+  <!-- STEP 4 -->
+  <section class="step" id="step4">
+    <h2><span class="num">4</span>OKが来たら稼働内訳スプシに貼る</h2>
+    <div class="btns">
+      <button id="copy" disabled>表の5列をコピー</button>
+      <span class="small">→ 稼働内訳スプシの本人のタブで <b>A2をクリック → Ctrl+V</b>（日付・概要・出勤・退勤・稼働の5列に分かれて入ります）</span>
     </div>
     <div class="status" id="copyStatus"></div>
-    <div id="shotBox" class="shotbox" hidden>
-      <img id="shotImg" alt="稼働内訳の画像">
-      <div class="small">画像はコピー済みです。LINEやChatworkの入力欄で <b>Ctrl+V</b> すると貼れます。<a id="shotDl" href="#" download>画像を保存する</a></div>
-    </div>
   </section>
 </main>
 
@@ -202,9 +230,14 @@
   const $ = (id) => document.getElementById(id);
   const src = $('src'), fileIn = $('file'), nameSel = $('name'), monthSel = $('month'),
         gaiyoIn = $('gaiyo'), daysEl = $('days'), totalEl = $('total'),
-        tbody = $('out').querySelector('tbody'), copyBtn = $('copy'), shotBtn = $('shot'),
-        parseStatus = $('parseStatus'), copyStatus = $('copyStatus'),
-        shotBox = $('shotBox'), shotImg = $('shotImg'), shotDl = $('shotDl');
+        tbody = $('out').querySelector('tbody'),
+        copyBtn = $('copy'), shotBtn = $('shot'), copyMsgBtn = $('copyMsg'),
+        parseStatus = $('parseStatus'), shotStatus = $('shotStatus'), copyStatus = $('copyStatus'),
+        shotBox = $('shotBox'), shotImg = $('shotImg'), shotDl = $('shotDl'),
+        srcWrap = $('srcWrap'), loadedWrap = $('loadedWrap'), loadedMsg = $('loadedMsg'),
+        msgPreview = $('msgPreview'), tplWrap = $('tplWrap'), tpl = $('tpl');
+
+  const DEFAULT_TPL = 'お疲れ様です。\n{月}分の稼働内訳をお送りします。\nご確認いただき、相違なければ返信をお願いいたします。';
 
   // 見出し名 → 必要な列（表記ゆれを少し吸収）
   const COLS = {
@@ -215,14 +248,15 @@
     hours: ['稼働時間', '稼働', '勤務時間']
   };
 
-  let records = []; // {name, dateKey(YYYY-MM-DD), month(YYYY-MM), start, end, hours, sortKey}
+  let records = []; // {name, key(YYYY-MM-DD), month(YYYY-MM), m, d, start, end, hours, sortKey}
 
-  // ---------- 保存した設定（名前・概要）を復元 ----------
+  // ---------- 保存した設定（名前・概要・文面）を復元 ----------
   const store = {
     get(k) { try { return localStorage.getItem('kado-uchiwake:' + k); } catch (e) { return null; } },
     set(k, v) { try { localStorage.setItem('kado-uchiwake:' + k, v); } catch (e) {} }
   };
   if (store.get('gaiyo')) gaiyoIn.value = store.get('gaiyo');
+  tpl.value = store.get('tpl') || DEFAULT_TPL;
 
   // ---------- 区切り文字つきテキストの読み取り（引用符・セル内改行に対応） ----------
   function parseDelimited(text, delim) {
@@ -280,11 +314,10 @@
   // ---------- 取り込み ----------
   function load(text) {
     records = [];
-    const t = String(text || '').replace(/^\uFEFF/, '');
-    if (!t.trim()) { setParse('', ''); rebuild(); return; }
+    const t = String(text || '').replace(/^﻿/, '');
+    if (!t.trim()) { setStatus(parseStatus, '', ''); showSource(true); rebuild(); return; }
 
     const rows = parseDelimited(t, detectDelim(t));
-    // 見出し行を探す（名前と日付の両方がある最初の行）
     let hi = -1, col = null;
     for (let i = 0; i < Math.min(rows.length, 20); i++) {
       const c = {
@@ -294,13 +327,13 @@
       if (c.name >= 0 && c.date >= 0) { hi = i; col = c; break; }
     }
     if (hi < 0) {
-      setParse('見出し行（名前・日付）が見つかりません。A1から選択してコピーし直してください。', 'ng');
-      rebuild(); return;
+      setStatus(parseStatus, '見出し行（名前・日付）が見つかりません。A1をクリックしてから Ctrl+A → Ctrl+C でコピーし直してください。', 'ng');
+      showSource(true); rebuild(); return;
     }
     const missing = ['start', 'end', 'hours'].filter((k) => col[k] < 0);
     if (missing.length) {
-      setParse('列が足りません：' + missing.map((k) => COLS[k][0]).join('・'), 'ng');
-      rebuild(); return;
+      setStatus(parseStatus, '列が足りません：' + missing.map((k) => COLS[k][0]).join('・'), 'ng');
+      showSource(true); rebuild(); return;
     }
 
     for (let i = hi + 1; i < rows.length; i++) {
@@ -314,11 +347,23 @@
       const hours = hoursRaw === '' ? '' : (isNaN(Number(hoursRaw)) ? hoursRaw : Number(hoursRaw));
       records.push({ name, ...dt, start, end, hours, sortKey: dt.key + ' ' + String(timeSortKey(start)).padStart(4, '0') });
     }
-    setParse(`読み込み：${records.length}行（${new Set(records.map((r) => r.name)).size}名）`, 'ok');
+    const names = new Set(records.map((r) => r.name)).size;
+    if (!records.length) {
+      setStatus(parseStatus, '読み込めた行がありません。', 'ng');
+      showSource(true); rebuild(); return;
+    }
+    loadedMsg.textContent = `✓ 読み込み済み：${records.length}行（${names}名）`;
+    showSource(false);
     rebuild();
   }
 
-  function setParse(msg, cls) { parseStatus.textContent = msg; parseStatus.className = 'status ' + (cls || ''); }
+  function showSource(show) {
+    srcWrap.hidden = !show;
+    loadedWrap.hidden = show;
+    $('step1').classList.toggle('done', !show);
+  }
+
+  function setStatus(el, msg, cls) { el.textContent = msg; el.className = 'status ' + (cls || ''); }
 
   // ---------- 名前・月のプルダウン ----------
   function rebuild() {
@@ -339,29 +384,13 @@
     render();
   }
 
-  // ---------- 表の作成 ----------
+  // ---------- 表 ----------
   function currentRows() {
     const gaiyo = gaiyoIn.value;
     return records
       .filter((r) => r.name === nameSel.value && r.month === monthSel.value)
       .sort((a, b) => a.sortKey.localeCompare(b.sortKey))
       .map((r) => [`${r.m}/${r.d}`, gaiyo, r.start, r.end, r.hours]);
-  }
-
-  function render() {
-    const rows = currentRows();
-    shotBox.hidden = true;
-    if (!rows.length) {
-      tbody.innerHTML = '<tr><td colspan="5" class="empty">該当する行がありません</td></tr>';
-      daysEl.textContent = '0'; totalEl.textContent = '0';
-      copyBtn.disabled = true; shotBtn.disabled = true;
-      return;
-    }
-    tbody.innerHTML = rows.map((r) => '<tr>' + r.map((c) => `<td>${esc(c)}</td>`).join('') + '</tr>').join('');
-    daysEl.textContent = String(rows.length);
-    totalEl.textContent = String(totalHours(rows));
-    copyBtn.disabled = false; shotBtn.disabled = false;
-    copyStatus.textContent = '';
   }
 
   function totalHours(rows) {
@@ -374,7 +403,68 @@
     return o ? o.textContent : '';
   }
 
-  // ---------- スクショ（表を画像にして、クリップボードへ） ----------
+  function render() {
+    const rows = currentRows();
+    shotBox.hidden = true;
+    setStatus(shotStatus, '', ''); setStatus(copyStatus, '', '');
+    const has = rows.length > 0;
+    if (!has) {
+      tbody.innerHTML = `<tr><td colspan="5" class="empty">${records.length ? '該当する行がありません' : '1で貼り付けると、ここに出ます'}</td></tr>`;
+      daysEl.textContent = '0'; totalEl.textContent = '0';
+    } else {
+      tbody.innerHTML = rows.map((r) => '<tr>' + r.map((c) => `<td>${esc(c)}</td>`).join('') + '</tr>').join('');
+      daysEl.textContent = String(rows.length);
+      totalEl.textContent = String(totalHours(rows));
+    }
+    copyBtn.disabled = shotBtn.disabled = copyMsgBtn.disabled = !has;
+    renderMsg();
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  }
+
+  // ---------- 文面 ----------
+  function message() {
+    const rows = currentRows();
+    return tpl.value
+      .replace(/\{月\}/g, monthLabel())
+      .replace(/\{名前\}/g, nameSel.value)
+      .replace(/\{日数\}/g, String(rows.length))
+      .replace(/\{合計\}/g, String(totalHours(rows)));
+  }
+
+  function renderMsg() { msgPreview.textContent = message(); }
+
+  async function copyText(text) {
+    let ok = false;
+    try { await navigator.clipboard.writeText(text); ok = true; } catch (e) {}
+    if (!ok) {
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      try { ok = document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+    return ok;
+  }
+
+  async function copyMsg() {
+    const ok = await copyText(message());
+    setStatus(shotStatus, ok ? '文面をコピーしました。トークに Ctrl+V で貼ってください。' : 'コピーに失敗しました。文面を手で選択してコピーしてください。', ok ? 'ok' : 'ng');
+  }
+
+  // ---------- 表の5列をコピー（タブ区切り → スプシに貼ると列に分かれる） ----------
+  async function copy() {
+    const rows = currentRows();
+    if (!rows.length) return;
+    const ok = await copyText(rows.map((r) => r.join('\t')).join('\n'));
+    setStatus(copyStatus,
+      ok ? `コピーしました（${rows.length}行）。稼働内訳スプシのA2で Ctrl+V してください。`
+         : 'コピーに失敗しました。表を手で選択してコピーしてください。',
+      ok ? 'ok' : 'ng');
+  }
+
+  // ---------- 画像（表をそのまま描いてクリップボードへ） ----------
   function drawImage() {
     const rows = currentRows();
     const heads = ['日付', '概要', '出勤時間', '退勤時間', '稼働時間'];
@@ -393,7 +483,6 @@
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, W, H);
 
-    // タイトル・小見出し
     ctx.fillStyle = '#1f2933';
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'left';
@@ -403,10 +492,8 @@
     ctx.fillStyle = '#6b7280';
     ctx.fillText(`日数 ${rows.length}日　／　稼働時間合計 ${totalHours(rows)}h`, pad, pad + titleH + subH / 2);
 
-    // 表
     let y = pad + titleH + subH + 8;
-    const all = [heads, ...rows];
-    all.forEach((r, i) => {
+    [heads, ...rows].forEach((r, i) => {
       let x = pad;
       r.forEach((c, j) => {
         ctx.fillStyle = i === 0 ? '#f1f3f4' : '#ffffff';
@@ -423,7 +510,6 @@
       y += rowH;
     });
 
-    // 出力日
     const d = new Date();
     ctx.font = '11px ' + font;
     ctx.fillStyle = '#9aa0a6';
@@ -439,7 +525,6 @@
     const blob = await new Promise((res) => cv.toBlob(res, 'image/png'));
     const fname = `稼働内訳_${monthLabel()}_${nameSel.value}.png`;
 
-    // プレビューと保存リンク
     const url = URL.createObjectURL(blob);
     if (shotDl.dataset.url) URL.revokeObjectURL(shotDl.dataset.url);
     shotDl.dataset.url = url;
@@ -448,46 +533,17 @@
     shotDl.download = fname;
     shotBox.hidden = false;
 
-    // クリップボードへ画像コピー（できない環境では自動で保存）
     let ok = false;
     try {
       await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
       ok = true;
     } catch (e) {}
     if (ok) {
-      copyStatus.textContent = `画像をコピーしました（${rows.length}日・${totalHours(rows)}h）。LINEやChatworkに Ctrl+V で貼って、本人に確認してください。`;
-      copyStatus.className = 'status ok';
+      setStatus(shotStatus, `画像をコピーしました（${rows.length}日・${totalHours(rows)}h）。トークに Ctrl+V で貼ってください。`, 'ok');
     } else {
       shotDl.click();
-      copyStatus.textContent = 'この環境では画像のコピーができないため、画像を保存しました。保存した画像を送って確認してください。';
-      copyStatus.className = 'status ng';
+      setStatus(shotStatus, 'この環境では画像のコピーができないため、画像を保存しました。保存した画像を送ってください。', 'ng');
     }
-  }
-
-  function esc(s) {
-    return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  }
-
-  // ---------- コピー（タブ区切り → スプシに貼ると列に分かれる） ----------
-  function toTSV() {
-    return currentRows().map((r) => r.join('\t')).join('\n');
-  }
-
-  async function copy() {
-    const text = toTSV();
-    if (!text) return;
-    let ok = false;
-    try { await navigator.clipboard.writeText(text); ok = true; } catch (e) {}
-    if (!ok) {
-      const ta = document.createElement('textarea');
-      ta.value = text; document.body.appendChild(ta); ta.select();
-      try { ok = document.execCommand('copy'); } catch (e) {}
-      document.body.removeChild(ta);
-    }
-    copyStatus.textContent = ok
-      ? `コピーしました（${currentRows().length}行）。稼働内訳スプシのA2で Ctrl+V してください。`
-      : 'コピーに失敗しました。表を手で選択してコピーしてください。';
-    copyStatus.className = 'status ' + (ok ? 'ok' : 'ng');
   }
 
   // ---------- イベント ----------
@@ -498,16 +554,22 @@
     if (!f) return;
     const buf = await f.arrayBuffer();
     let text = new TextDecoder('utf-8').decode(buf);
-    if (/\uFFFD/.test(text)) { try { text = new TextDecoder('shift_jis').decode(buf); } catch (e) {} }
+    if (/�/.test(text)) { try { text = new TextDecoder('shift_jis').decode(buf); } catch (e) {} }
     src.value = text;
     load(text);
   });
-  $('clear').addEventListener('click', () => { src.value = ''; fileIn.value = ''; load(''); });
+  $('reload').addEventListener('click', () => { src.value = ''; fileIn.value = ''; load(''); src.focus(); });
   nameSel.addEventListener('change', () => { store.set('name', nameSel.value); render(); });
   monthSel.addEventListener('change', render);
   gaiyoIn.addEventListener('input', () => { store.set('gaiyo', gaiyoIn.value); render(); });
+  tpl.addEventListener('input', () => { store.set('tpl', tpl.value); renderMsg(); });
+  $('tplToggle').addEventListener('click', () => { tplWrap.hidden = !tplWrap.hidden; });
+  $('tplReset').addEventListener('click', () => { tpl.value = DEFAULT_TPL; store.set('tpl', DEFAULT_TPL); renderMsg(); });
   copyBtn.addEventListener('click', copy);
   shotBtn.addEventListener('click', shot);
+  copyMsgBtn.addEventListener('click', copyMsg);
+
+  renderMsg();
 })();
 </script>
 </body>
